@@ -116,7 +116,7 @@ function generateTags() {
         articleTagsArray +
         '</a></li>';
       /* add generated code to html variable */
-      html /*garnek na marchewki*/ =
+      html /**/ =
         html /*wcześniejsze elementy*/ + tagLinkHTML /*ostatni element*/;
       /*[NEW] check if this link is not already in allTags*/
       if (allTags.indexOf(tagLinkHTML) == -1) {
@@ -186,13 +186,11 @@ function addClickListenersToTags() {
 
 addClickListenersToTags();
 
-/*Zadanie:dodanie autora do artykułu*/
 function generateAuthors() {
   /* find all articles */
   const allArticles = document.querySelectorAll(optArticleSelector);
   console.log(allArticles);
   /* START LOOP: for every article: */
-  /*Dlaczego używamy autora który nie został nigdzie wcześniej zdefiniowany?*/
   for (let article of allArticles) {
     /* find authors wrapper */
     const authorWrapper = document.querySelector(optArticleAuthorSelector);
