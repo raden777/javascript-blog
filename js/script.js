@@ -105,12 +105,13 @@ function generateTags() {
     /* split tags into array */
     const articleTagsArray = articleTags.split(' ');
     // console.log(articleTagsArray);
+
     /* START LOOP: for each tag */
     for (let tag of articleTagsArray) {
       /* generate HTML of the link */
       const tagLinkHTML = '<li><a href="#tag-' + tag + '">' + tag + '</a></li>';
       /* add generated code to html variable */
-      html = html + tagLinkHTML;
+      html = html + tagLinkHTML + '<br>'; //dodanie <br>
       /*[NEW] check if this link is not already in allTags*/
       if (allTags.indexOf(tagLinkHTML) == -1) {
         /*[NEW] add generated code to allTags array*/
