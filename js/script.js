@@ -90,16 +90,23 @@ function generateTitleLinks(customSelector = '') {
     html = html + linkHTML;
     // console.log(html);
   }
+
+  const links = document.querySelectorAll('.titles a');
+  // console.log(links);
+  for (let link of links) {
+    link.addEventListener('click', titleClickHandler);
+  }
 }
 generateTitleLinks();
 
-const links = document.querySelectorAll('.titles a');
-// console.log(links);
-for (let link of links) {
-  link.addEventListener('click', titleClickHandler);
-}
-
 //6.2 - Generate tags
+function calculateTagClass(count, params) {
+  const normalizedCount = count - params.min;
+  const normalizedRange = params.max - params.min;
+  const percentage = normalizedCount / normalizedRange;
+  const classNumber = Math.floor(percentage * (tagClassNames.length - 1));
+  return tagClassNames[classNumber];
+}
 
 function generateTags() {
   // /*[NEW] create a new variable allTags with an empty array*/
@@ -126,9 +133,9 @@ function generateTags() {
     /* START LOOP: for each tag */
     for (let tag of articleTagsArray) {
       /* generate HTML of the link */
-      // const tagLinkHTML = templates.articleTagLink({ tag: tag }); tutaj poprawic !!!!!!!
-      const tagLinkHTML =
-        '<li><a href="#tag-' + tag + '">' + tag + '</a> ' + '&nbsp;' + '</li>';
+      const tagLinkHTML = templates.articleTagLink({ tag: tag });
+      // const tagLinkHTML =
+      //   '<li><a href="#tag-' + tag + '">' + tag + '</a> ' + '&nbsp;' + '</li>';
       /* add generated code to html variable */
       html = html + tagLinkHTML; //dodanie <br>
       //chec if this link is NOT alreday in allTags
@@ -159,6 +166,22 @@ function generateTags() {
   // tagList.innerHTML = allTags.join(' ');
   // console.log(allTags);
 
+  function calculateTagSize(tagSize) {
+    const objectArray = Object.values(allTags);
+
+    let max = 0;
+
+    for (let item of objectArray) {
+      if (item > max) {
+        max = item;
+      }
+    }
+
+    const size = Math.max(1, Math.round((tagSize / max) * 4));
+
+    return size;
+  }
+
   const tagsParams = calculateTagsParams(allTags);
   function calculateTagsParams(tags) {
     const params = {
@@ -179,20 +202,25 @@ function generateTags() {
     return params;
   }
 
-  function calculateTagClass(count, params) {
-    const normalizedCount = count - params.min;
-    const normalizedRange = params.max - params.min;
-    const percentage = normalizedCount / normalizedRange;
-    const classNumber = Math.floor(percentage * (tagClassNames.length - 1));
-    return tagClassNames[classNumber];
-  }
   //[NEW] create variable for all links HTML code
   let allTagsHTML = '';
   // [NEW] START LOOP: for each tag in allTags
   for (let tag in allTags) {
     // [NEW] generate code of a link and add it to allTagsHTML
     allTagsHTML +=
-      '<a href="#tag-' + tag + '">' + tag + ' (' + allTags[tag] + ') </a><br>';
+      '<a class="tag-size-' +
+      calculateTagSize(allTags[tag]) +
+      '" href="#tag-' +
+      tag +
+      '">' +
+      tag +
+      ' (' +
+      allTags[tag] +
+      ') </a><br>';
+    // const tagLinkClass = calculateTagClass(allTags[tag], tagsParams);
+    // const tagLinkHTML =
+    //   '<li>' + calculateTagClass(allTags[tag], tagsParams) + '<li>';
+    // console.log('tagLinkHTML:', tagLinkHTML);              nie dziala !!!!!!!!!
   }
   // const tagLinkHTML =
   //   '<li>' + calculateTagClass(allTags[tag], tagsParams) + '<li>';

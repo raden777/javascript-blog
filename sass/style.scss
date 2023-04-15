@@ -91,7 +91,6 @@ body {
 .list-horizontal {
   li {
     display: inline-block;
-    float: left;
   }
 }
 
@@ -120,5 +119,26 @@ body {
   display: flex;
   p {
     margin: 0 10px 0 0;
+  }
+}
+
+.tag-size {
+  &-1 {
+    // DO NOT CHANGE
+  }
+
+  &-2 {
+    font-size: 20px;
+    font-style: italic;
+  }
+
+  &-3 {
+    font-size: 24px;
+    font-weight: 600;
+  }
+
+  &-4 {
+    font-size: 28px;
+    font-weight: 800;
   }
 }
