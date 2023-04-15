@@ -91,6 +91,7 @@ body {
 .list-horizontal {
   li {
     display: inline-block;
+    float: left;
   }
 }
 
@@ -120,4 +121,9 @@ body {
   p {
     margin: 0 10px 0 0;
   }
+}
+
+a[href^='#tag-'] {
+  display: inline-block;
+  margin-right: 10px; /*lub inna wartość odstępu*/
 }
