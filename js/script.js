@@ -3,6 +3,18 @@ const templates = {
   articleLink: Handlebars.compile(
     document.querySelector('#template-article-link').innerHTML
   ),
+  articleTagLink: Handlebars.compile(
+    document.querySelector('#template-article-tag-link').innerHTML
+  ),
+  authorLink: Handlebars.compile(
+    document.querySelector('#template-author-link').innerHTML
+  ),
+  tagCloudLink: Handlebars.compile(
+    document.querySelector('#template-tag-cloud-link').innerHTML
+  ),
+  authorCloudLink: Handlebars.compile(
+    document.querySelector('#template-author-cloud-link').innerHTML
+  ),
 };
 
 function titleClickHandler(event) {
@@ -87,13 +99,6 @@ for (let link of links) {
   link.addEventListener('click', titleClickHandler);
 }
 
-function calculateTagClass(count, params) {
-  const normalizedCount = count - params.min;
-  const normalizedRange = params.max - params.min;
-  const percentage = normalizedCount / normalizedRange;
-  const classNumber = Math.floor(percentage * (tagClassNames.length - 1));
-  return tagClassNames[classNumber];
-}
 //6.2 - Generate tags
 
 function generateTags() {
@@ -121,6 +126,7 @@ function generateTags() {
     /* START LOOP: for each tag */
     for (let tag of articleTagsArray) {
       /* generate HTML of the link */
+      // const tagLinkHTML = templates.articleTagLink({ tag: tag }); tutaj poprawic !!!!!!!
       const tagLinkHTML =
         '<li><a href="#tag-' + tag + '">' + tag + '</a> ' + '&nbsp;' + '</li>';
       /* add generated code to html variable */
@@ -133,6 +139,7 @@ function generateTags() {
         allTags[tag]++;
       }
       // /*[NEW] check if this link is not already in allTags*/
+
       // if (allTags.indexOf(tagLinkHTML) == -1)
       // /*[NEW] add generated code to allTags array*/
       // allTags.push(tagLinkHTML);
@@ -172,6 +179,13 @@ function generateTags() {
     return params;
   }
 
+  function calculateTagClass(count, params) {
+    const normalizedCount = count - params.min;
+    const normalizedRange = params.max - params.min;
+    const percentage = normalizedCount / normalizedRange;
+    const classNumber = Math.floor(percentage * (tagClassNames.length - 1));
+    return tagClassNames[classNumber];
+  }
   //[NEW] create variable for all links HTML code
   let allTagsHTML = '';
   // [NEW] START LOOP: for each tag in allTags
@@ -247,6 +261,18 @@ function generateAuthors() {
   for (let article of allArticles) {
     const articleAuthor = article.getAttribute('data-author');
     const authorWrapper = article.querySelector(optArticleAuthorSelector);
+
+    //   const linkToHTMLData = { author: articleAuthor }; tutaj poprawić !!!!!!!
+    //   const linkToHTM = templates.authorLink(linkToHTMLData);
+    //   html = html + linkToHTM;
+
+    //   if(!authorRightBar.hasOwnProperty(articleAuthor)){
+    //     authorRightBar[articleAuthor] = 1;
+    //   } else {
+    //     authorRightBar[articleAuthor]++;  //jesli ten tag znajduje sie w allTags,zwiekszamy licznik wystapien o jeden
+    //   }
+    //   authorWrapper.innerHTML = html;
+    // }
     const authorHTML =
       '<a href="#author-' + articleAuthor + '">' + articleAuthor + '</a>';
     authorWrapper.innerHTML = authorHTML;
