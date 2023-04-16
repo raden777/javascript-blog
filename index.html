@@ -316,7 +316,7 @@
               class="post"
               id="article-10"
               data-tags="tree green carrot"
-              data-author="George Tuxedo"
+              data-author="by George Tuxedo"
             >
               <h3 class="post-title">Article 10</h3>
               <p class="post-author"></p>
@@ -371,18 +371,16 @@
     </script>
 
     <script id="template-author-link" type="text/x-handlebars-template">
-      <li>
-        <a href='#author-{{author}}'>
-          <span>{{author}}</span>
-        </a>
-      </li>
+      <a href='#author-{{author}}'>
+        <span>{{author}}</span>
+      </a>
     </script>
 
     <script id="template-tag-cloud-link" type="text/x-handlebars-template">
       {{#each tags}}
         <li>
           <a href='#tag-{{tag}}' class='{{className}}'>
-            <span>{{tag}}</span>
+            <span>{{tag}} ({{count}})</span>
           </a>
         </li>
       {{/each}}
@@ -392,7 +390,7 @@
       {{#each authors}}
         <li>
           <a href='#author-{{author}}'>
-            <span>{{author}}</span>
+            <span>{{author}} ({{count}})</span>
           </a>
         </li>
       {{/each}}

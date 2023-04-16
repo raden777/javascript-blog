@@ -145,8 +145,14 @@ function generateTags() {
       } else {
         allTags[tag]++;
       }
-      // /*[NEW] check if this link is not already in allTags*/
+      /*[NEW] check if this link is not already in allTags*/
 
+      // if(!authorRightBar.hasOwnProperty(articleAuthor)){
+      //   authorRightBar[articleAuthor] = 1;
+      // } else {
+      //   authorRightBar[articleAuthor]++;  //jesli ten tag znajduje sie w allTags,zwiekszamy licznik wystapien o jeden
+      // }
+      // authorWrapper.innerHTML = html;
       // if (allTags.indexOf(tagLinkHTML) == -1)
       // /*[NEW] add generated code to allTags array*/
       // allTags.push(tagLinkHTML);
@@ -203,32 +209,22 @@ function generateTags() {
   }
 
   //[NEW] create variable for all links HTML code
-  let allTagsHTML = '';
+  const allTagsData = {
+    tags: [],
+  };
   // [NEW] START LOOP: for each tag in allTags
   for (let tag in allTags) {
     // [NEW] generate code of a link and add it to allTagsHTML
-    allTagsHTML +=
-      '<a class="tag-size-' +
-      calculateTagSize(allTags[tag]) +
-      '" href="#tag-' +
-      tag +
-      '">' +
-      tag +
-      ' (' +
-      allTags[tag] +
-      ') </a><br>';
-    // const tagLinkClass = calculateTagClass(allTags[tag], tagsParams);
-    // const tagLinkHTML =
-    //   '<li>' + calculateTagClass(allTags[tag], tagsParams) + '<li>';
-    // console.log('tagLinkHTML:', tagLinkHTML);              nie dziala !!!!!!!!!
+    allTagsData.tags.push({
+      tag: tag,
+      count: allTags[tag],
+      className: 'tag-size-' + calculateTagSize(allTags[tag]),
+    });
   }
-  // const tagLinkHTML =
-  //   '<li>' + calculateTagClass(allTags[tag], tagsParams) + '<li>';
-  // console.log('taglinkHTML:', tagLinkHTML);
-
   // [NEW] END LOOP: for each tag in allTags
   // [NEW] add html from allTagsHTML to tagList
-  tagList.innerHTML = allTagsHTML;
+  // tagList.innerHTML = allTagsHTML;
+  tagList.innerHTML = templates.tagCloudLink(allTagsData);
 }
 
 generateTags();
@@ -286,24 +282,16 @@ function generateAuthors() {
   const authorList = document.querySelector(optAuthorListSelector);
   let allAuthors = {};
 
+  let authorsHTML = '';
+
   for (let article of allArticles) {
     const articleAuthor = article.getAttribute('data-author');
     const authorWrapper = article.querySelector(optArticleAuthorSelector);
 
-    //   const linkToHTMLData = { author: articleAuthor }; tutaj poprawić !!!!!!!
-    //   const linkToHTM = templates.authorLink(linkToHTMLData);
-    //   html = html + linkToHTM;
+    const authorNameHTMLData = { author: articleAuthor };
+    const authorNameHTML = templates.authorLink(authorNameHTMLData);
 
-    //   if(!authorRightBar.hasOwnProperty(articleAuthor)){
-    //     authorRightBar[articleAuthor] = 1;
-    //   } else {
-    //     authorRightBar[articleAuthor]++;  //jesli ten tag znajduje sie w allTags,zwiekszamy licznik wystapien o jeden
-    //   }
-    //   authorWrapper.innerHTML = html;
-    // }
-    const authorHTML =
-      '<a href="#author-' + articleAuthor + '">' + articleAuthor + '</a>';
-    authorWrapper.innerHTML = authorHTML;
+    authorWrapper.innerHTML = authorNameHTML;
 
     if (!allAuthors.hasOwnProperty(articleAuthor)) {
       allAuthors[articleAuthor] = 1;
@@ -312,17 +300,19 @@ function generateAuthors() {
     }
   }
 
-  let authorsHTML = '';
-  for (let author in allAuthors) {
-    authorsHTML +=
-      '<li><a href="#author-' +
-      author +
-      '">' +
-      author +
-      ' (' +
-      allAuthors[author] +
-      ')</a></li>';
+  const authorArray = Object.entries(allAuthors);
+  const authorsDataArray = {
+    authors: [],
+  };
+
+  for (let author of authorArray) {
+    const authorLinkHTMLData = { author: author[0], count: author[1] };
+    authorsDataArray.authors.push(authorLinkHTMLData);
   }
+
+  const authorLinkHTML = templates.authorCloudLink(authorsDataArray);
+  authorsHTML = authorsHTML + authorLinkHTML;
+
   authorList.innerHTML = authorsHTML;
 }
 
