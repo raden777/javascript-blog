@@ -115,13 +115,6 @@ body {
   font-style: italic;
 }
 
-.post-tags {
-  display: flex;
-  p {
-    margin: 0 10px 0 0;
-  }
-}
-
 .tag-size {
   &-1 {
     // DO NOT CHANGE
@@ -129,7 +122,6 @@ body {
 
   &-2 {
     font-size: 20px;
-    font-style: italic;
   }
 
   &-3 {

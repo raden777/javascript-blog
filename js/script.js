@@ -59,8 +59,8 @@ const optArticleSelector = '.post', //article
   optArticleAuthorSelector = '.post-author', //author's name in article
   optTagListSelector = '.list.tags',
   optAuthorListSelector = '.list.authors';
-const optCloudClassCount = 5;
-const optCloudClassPrefix = '.tag-size-';
+// const optCloudClassCount = 5;
+// const optCloudClassPrefix = '.tag-size-';
 
 function generateTitleLinks(customSelector = '') {
   /*remove contents of titleList*/
@@ -99,14 +99,14 @@ function generateTitleLinks(customSelector = '') {
 }
 generateTitleLinks();
 
-//6.2 - Generate tags
-function calculateTagClass(count, params) {
-  const normalizedCount = count - params.min;
-  const normalizedRange = params.max - params.min;
-  const percentage = normalizedCount / normalizedRange;
-  const classNumber = Math.floor(percentage * (tagClassNames.length - 1));
-  return tagClassNames[classNumber];
-}
+// //6.2 - Generate tags
+// function calculateTagClass(count, params) {
+//   const normalizedCount = count - params.min;
+//   const normalizedRange = params.max - params.min;
+//   const percentage = normalizedCount / normalizedRange;
+//   const classNumber = Math.floor(percentage * (tagClassNames.length - 1));
+//   return tagClassNames[classNumber];
+// }
 
 function generateTags() {
   // /*[NEW] create a new variable allTags with an empty array*/
@@ -188,25 +188,25 @@ function generateTags() {
     return size;
   }
 
-  const tagsParams = calculateTagsParams(allTags);
-  function calculateTagsParams(tags) {
-    const params = {
-      min: 1,
-      max: 7,
-    };
+  // const tagsParams = calculateTagsParams(allTags);
+  // function calculateTagsParams(tags) {
+  //   const params = {
+  //     min: 1,
+  //     max: 7,
+  //   };
 
-    for (let tag in tags) {
-      if (tags[tag] < params.min) {
-        params.min = tags[tag];
-      }
-      if (tags[tag] > params.max) {
-        params.max = tags[tag];
-      }
-    }
-    // console.log('Minimum tag count:', params.min);
-    // console.log('Maximum tag count:', params.max);
-    return params;
-  }
+  //   for (let tag in tags) {
+  //     if (tags[tag] < params.min) {
+  //       params.min = tags[tag];
+  //     }
+  //     if (tags[tag] > params.max) {
+  //       params.max = tags[tag];
+  //     }
+  //   }
+  //   // console.log('Minimum tag count:', params.min);
+  //   // console.log('Maximum tag count:', params.max);
+  //   return params;
+  // }
 
   //[NEW] create variable for all links HTML code
   const allTagsData = {
@@ -248,11 +248,11 @@ function tagClickHandler(event) {
   /* START LOOP: for each active tag link */
   for (let tagLink of tagLinks) {
     /* remove class active */
-    tagLinks.classList.remove('active');
+    tagLink.classList.remove('active');
     /* END LOOP: for each active tag link */
   }
   /* find all tag links with "href" attribute equal to the "href" constant */
-  const linkHref = document.querySelector('a[href="' + href + '"]'); // can we use tagLink zamiast document?
+  // const linkHref = document.querySelector('a[href="' + href + '"]'); // can we use tagLink zamiast document?
   /* START LOOP: for each found tag link */
   for (let tagLink of tagLinks) {
     /* add class active */
